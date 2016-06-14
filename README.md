@@ -1,3 +1,3 @@
 # Lonely
 
-This is a javascript framework to separate in parts each code's reponsability   
+This a powerful dependency injection javacript framework!
