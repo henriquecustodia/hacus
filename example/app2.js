@@ -1,6 +1,9 @@
-lonely('service2', function (service1, service3, service4) {
-    debugger
-    console.log(service1, service3, service4, 'service2');
-}, ['service1', 'service3', 'service4']);
+component('app', {
+    selector: 'app',
+    template: '<h1>here</h1>',
+    controller: function () {
+        
+    }
+});
 
-lonely('service2');
+wakeUp()
