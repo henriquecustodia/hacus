@@ -1,15 +1,82 @@
-lonely('service3', function () {
-    return 'service 3'
-}, []);
+component('@model', {
+    selector: '[\\@model]',
+    ui: function (model, element) {
+        var modelAttr = element.getAttribute('@model');
 
-lonely('service1', function (service3) {
-    return 'service 1 - ' + service3;
-}, ['service3']);
+        element.value = model[modelAttr];
 
-lonely('service4', 'henrique');
+        element.onkeyup = function () {
+            model[modelAttr] = element.value;
+        };
 
-lonely('service2', function (service1, service3, service4) {
-    console.log(service1, service3, service4, 'service2');
-}, ['service1', 'service3', 'service4']);
+        var un = model['@watch'](modelAttr, function (old, value) {
+            console.log('model', value)
+            element.value = value;
+            un();
+        });
+    }
+});
 
-lonely('service2');
+component('@click', {
+    selector: '[\\@click]',
+    ui: function (model, element) {
+        var click = element.getAttribute('@click');
+        var arr = click.split('(');
+
+        element.onclick = function () {
+            model[arr[0]]();
+        };
+    }
+});
+
+component('@output', {
+    selector: '[\\@output]',
+    ui: function (model, element) {
+        var output = element.getAttribute('@output');
+
+        element.innerHTML = model[output];
+
+        model['@watch'](output, function (old, current) {
+            element.innerHTML = current;
+        });
+    }
+});
+
+component('myForm', {
+    selector: 'my-form',
+
+    template: [
+        '<h1 @output="title"></h1>',
+        '<input @model="name">',
+        '<button @click="say()">click</button>',
+        '<h2 @output="name"></h2>'
+    ].join(''),
+    
+    helpers: [
+        '@model',
+        '@click',
+        '@output'
+    ],
+
+    ui: function (model, element) {
+        var title = element.getAttribute('title');
+        
+        model.title = title;
+    },
+
+    controller: function () {
+        var that = this;
+
+        this['@watch']('name', function (old, newName) {
+            console.log('controller', newName);
+        });
+
+        this.name = 'henrique';
+
+        this.say = function () {
+            alert('Hello, ' + that.name);
+        };
+    }
+});
+
+wakeUp();
