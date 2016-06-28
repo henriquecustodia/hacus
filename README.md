@@ -1,3 +1,3 @@
 # LonelyJS
 
-This a powerful dependency injection javacript framework!
+This is a powerful javascript framework webcomponents based!
