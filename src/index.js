@@ -1,5 +1,8 @@
-import watchPolyfill from './watch-polyfill';
-import bind from './bind';
+import 'core-js/es6/map';
+import 'core-js/es6/array';
 
-window.component = bind.component;
-window.wakeUp = bind.wakeUp;
+import watchPolyfill from './watch-polyfill';
+import {componentRecorder, lookAround} from './bind';
+
+window.Lonely = componentRecorder;
+window.Lonely.lookAround = lookAround;

@@ -1,7 +1,7 @@
-component('@model', {
-    selector: '[\\@model]',
+Lonely('@input', {
+    selector: '[\\@input]',
     ui: function (model, element) {
-        var modelAttr = element.getAttribute('@model');
+        var modelAttr = element.getAttribute('@input');
 
         element.value = model[modelAttr];
 
@@ -17,7 +17,7 @@ component('@model', {
     }
 });
 
-component('@click', {
+Lonely('@click', {
     selector: '[\\@click]',
     ui: function (model, element) {
         var click = element.getAttribute('@click');
@@ -29,7 +29,7 @@ component('@click', {
     }
 });
 
-component('@output', {
+Lonely('@output', {
     selector: '[\\@output]',
     ui: function (model, element) {
         var output = element.getAttribute('@output');
@@ -42,18 +42,18 @@ component('@output', {
     }
 });
 
-component('myForm', {
+Lonely('myForm', {
     selector: 'my-form',
 
     template: [
         '<h1 @output="title"></h1>',
-        '<input @model="name">',
+        '<input @input="name">',
         '<button @click="say()">click</button>',
         '<h2 @output="name"></h2>'
     ].join(''),
     
     helpers: [
-        '@model',
+        '@input',
         '@click',
         '@output'
     ],
@@ -64,7 +64,7 @@ component('myForm', {
         model.title = title;
     },
 
-    controller: function () {
+    model: function () {
         var that = this;
 
         this['@watch']('name', function (old, newName) {
@@ -79,4 +79,4 @@ component('myForm', {
     }
 });
 
-wakeUp();
+Lonely.lookAround();
