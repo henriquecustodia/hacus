@@ -1,8 +1,15 @@
+'use strict';
+
 import 'core-js/es6/map';
 import 'core-js/es6/array';
 
-import watchPolyfill from './watch-polyfill';
-import {componentRecorder, lookAround} from './bind';
+import ComponentRecorder from './core/recorders/component-recorder';
+import Manager from './core/dom/manager';
 
-window.Lonely = componentRecorder;
-window.Lonely.lookAround = lookAround;
+let Lonely = (name, configuration) => {
+    new ComponentRecorder(name, configuration).register();
+};
+
+Lonely.lookAround = () => Manager.lookAround();
+
+window.Lonely = Lonely;

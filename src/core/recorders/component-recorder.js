@@ -5,7 +5,7 @@ import {noop} from './../utils';
 
 const Storage = new Map();
 
-class ComponentRecorder {
+module.exports = class ComponentRecorder {
     constructor(name, configuration) {
         if (!name) {
             new CustomError(`A name is required for component.`);
@@ -21,7 +21,6 @@ class ComponentRecorder {
 
         this.name = name;
         this.configuration = configuration;
-        this.register();
     }
 
     register() {
@@ -47,5 +46,3 @@ class ComponentRecorder {
         Storage.forEach(fn);
     }
 }
-
-module.exports = ComponentRecorder;

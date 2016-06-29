@@ -1,10 +1,12 @@
 'use strict';
 
-import {generateID} from './utils';
+import {generateID} from './../utils';
+import defineWatcher from './watcher';
 
 class Context {
     constructor() {
         this['@watchers'] = new Map();
+        defineWatcher(this);
     }
 
     ['@watch'](prop, fn) {
