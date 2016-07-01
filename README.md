@@ -1,3 +1,3 @@
 # LonelyJS
+A javascript framework to create custom components easily
 
-This is a powerful javascript framework webcomponents based!
