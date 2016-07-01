@@ -1,46 +1,86 @@
 'use strict';
 
-var packageConfig = require('./package.json');
+const packageConfig = require('./package.json');
 
-var gulp = require('gulp');
-var sourcemaps = require('gulp-sourcemaps');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var babel = require('babelify');
+const gulp = require('gulp');
 
-function compile(watch) {
-    var bundler = watchify(browserify('./src/index.js', { debug: true }).transform(babel));
+const connect = require('gulp-connect');
 
-    function rebundle() {
-        bundler.bundle()
-            .on('error', function (err) {
-                console.error(err);
-                this.emit('end');
-            })
-            .pipe(source(`${packageConfig.name}.js`))
-            .pipe(buffer())
-            .pipe(sourcemaps.init({ loadMaps: true }))
-            .pipe(sourcemaps.write('./'))
-            .pipe(gulp.dest('./dist'));
-    }
+const babelify = require('babelify');
+const browserify = require('browserify');
+const buffer = require('vinyl-buffer');
+const source = require('vinyl-source-stream');
+const sourcemaps = require('gulp-sourcemaps');
+const minify = require('gulp-minify');
 
-    if (watch) {
-        bundler.on('update', function () {
-            console.log('-> bundling...');
-            rebundle();
-        });
-    }
+gulp.task('bundle:lib', () => {
+    var bundler = browserify({
+        entries: 'src/index.js',
+        debug: true
+    });
+    bundler.transform(babelify);
+    bundler.bundle()
+        .on('error', function (err) { console.error(err); })
+        .pipe(source(`${packageConfig.name}.js`))
+        .pipe(buffer())
+        .pipe(gulp.dest('example/lib'));
+});
 
-    rebundle();
-}
+gulp.task('bundle:example', () => {
+    var bundler = browserify({
+        entries: 'example/app.js',
+        debug: true
+    });
+    bundler.transform(babelify);
+    bundler.bundle()
+        .on('error', function (err) { console.error(err); })
+        .pipe(source(`app.js`))
+        .pipe(buffer())
+        .pipe(gulp.dest('example/dist'));
+});
 
-function watch() {
-    return compile(true);
-};
+gulp.task('bundle:dist', () => {
+    var bundler = browserify({
+        entries: 'src/index.js',
+        debug: true
+    });
+    bundler.transform(babelify);
+    bundler.bundle()
+        .on('error', function (err) { console.error(err); })
+        .pipe(source(`${packageConfig.name}.js`))
+        .pipe(buffer())
+        .pipe(sourcemaps.init({ loadMaps: true }))
+        .pipe(minify())
+        .pipe(sourcemaps.write('./'))
+        .pipe(gulp.dest('dist'));
+});
 
-gulp.task('build', function () { return compile(); });
-gulp.task('watch', function () { return watch(); });
+gulp.task('connect', () => {
+    connect.server({
+        livereload: true
+    });
+});
 
-gulp.task('default', ['watch']);
+gulp.task('server:reload', () => {
+    connect.reload();
+});
+
+gulp.task('watch', () => {
+
+    gulp.watch([
+        'src/*.js',
+        'src/**/*.js',
+        'src/**/**/*.js'
+    ], ['bundle:lib', 'server:reload']);
+
+    gulp.watch([
+        'example/*.js',
+    ], ['bundle:example', 'server:reload']);
+
+    gulp.watch([
+        'example/*.html',
+        'example/**/*.html',
+    ], ['bundle:example', 'server:reload']);
+});
+
+gulp.task('serve', ['bundle:lib', 'bundle:example', 'watch', 'connect']);

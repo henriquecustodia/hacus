@@ -18,6 +18,8 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
     "gulp-browserify": "^0.5.1",
+    "gulp-connect": "^4.1.0",
+    "gulp-minify": "0.0.12",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "vinyl-buffer": "^1.0.0",

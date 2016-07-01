@@ -24,14 +24,7 @@ module.exports = class ComponentRecorder {
     }
 
     register() {
-        let conf = {};
-        conf.ui = this.configuration.ui || noop;
-        conf.model = this.configuration.model || noop;
-        conf.helpers = this.configuration.helpers || [];
-        conf.selector = this.configuration.selector;
-        conf.template = this.configuration.template;
-
-        Storage.set(this.name, conf);
+        Storage.set(this.name, this.configuration);
     }
 
     static has(key) {

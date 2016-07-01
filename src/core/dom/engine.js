@@ -4,15 +4,15 @@ import Context from './../context/context';
 import ComponentRecorder from './../recorders/component-recorder';
 
 module.exports = class Engine {
-    constructor(element, component) {
+    constructor(element, Component) {
         this.context = new Context();
         this.element = element;
-        this.component = component;
+        this.component = new Component();
     }
 
     render() {
         let div = document.createElement('div');
-        div.innerHTML = this.component.template;
+        div.innerHTML = this.component.template();
 
         var arrNodes = Array.from(div.childNodes);
 
@@ -29,21 +29,26 @@ module.exports = class Engine {
 
 function compileComponent() {
     this.component.model.apply(this.context);
-    this.component.ui.call(null, this.context, this.element);
+    this.component.dom.call(null, this.context, this.element);
 }
 
 function compileHelpers() {
-    this.component.helpers.forEach(helper => {
-        if (!ComponentRecorder.has(helper)) {
+    let helpers = this.component.helpers()
+
+    if (!helpers || !Array.isArray(helpers)) return;
+
+    helpers.forEach(helper => {
+        if (!helper || !ComponentRecorder.has(helper)) {
             return;
         }
 
-        var componentHelper = ComponentRecorder.get(helper);
+        let ComponentHelper = ComponentRecorder.get(helper);
 
-        var elements = this.element.querySelectorAll(componentHelper.selector);
+        var elements = this.element.querySelectorAll(ComponentHelper.selectors());
         if (elements.length) {
             Array.from(elements).forEach(elementHandler => {
-                componentHelper.ui.call(null, this.context, elementHandler);
+                 let componentHelper = new ComponentHelper();
+                 componentHelper.dom.call(null, this.context, elementHandler);
             });
         }
     });
