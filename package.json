@@ -1,48 +1,40 @@
 {
-  "name": "lonely",
-  "version": "0.0.1-alpha",
-  "description": "A javascript framework webcomponents based ",
-  "main": "Gulpfile.js",
+  "name": "hacus",
+  "version": "0.0.1",
+  "description": "A javascript framework to create custom components easily",
+  "main": "dist/hacus.js",
   "directories": {
     "example": "example"
   },
   "dependencies": {
-    "gulp": "^3.9.1"
-  },
-  "devDependencies": {
     "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
     "babelify": "^7.3.0",
     "browserify": "^13.0.1",
     "core-js": "^2.4.0",
-    "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
+    "gulp": "^3.9.1",
     "gulp-browserify": "^0.5.1",
     "gulp-connect": "^4.1.0",
-    "gulp-minify": "0.0.12",
+    "gulp-minify": "^0.0.12",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.6.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
   },
+  "devDependencies": {},
   "scripts": {
-    "start": "http-server && gulp watch"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/js-frameworks/lonely.git"
+    "url": "git+https://github.com/henriquecustodia/hacus.git"
   },
-  "keywords": [
-    "data",
-    "binding",
-    "components",
-    "js"
-  ],
   "author": "",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
-    "url": "https://gitlab.com/js-frameworks/lonely/issues"
+    "url": "https://github.com/henriquecustodia/hacus/issues"
   },
-  "homepage": "https://gitlab.com/js-frameworks/lonely#README"
+  "homepage": "https://github.com/henriquecustodia/hacus#readme"
 }

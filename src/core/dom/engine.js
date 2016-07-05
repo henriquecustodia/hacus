@@ -2,6 +2,7 @@
 
 import Context from './../context/context';
 import ComponentRecorder from './../recorders/component-recorder';
+import {isFunction} from './../utils';
 
 module.exports = class Engine {
     constructor(element, Component) {
@@ -11,6 +12,10 @@ module.exports = class Engine {
     }
 
     render() {
+        if (!isFunction(this.component.template)) {
+            return;
+        }
+
         let div = document.createElement('div');
         div.innerHTML = this.component.template();
 
@@ -33,9 +38,11 @@ function compileComponent() {
 }
 
 function compileHelpers() {
-    let helpers = this.component.helpers()
+    let helpers = this.component.helpers();
 
-    if (!helpers || !Array.isArray(helpers)) return;
+    if (!helpers || !Array.isArray(helpers)) {
+        return;
+    }
 
     helpers.forEach(helper => {
         if (!helper || !ComponentRecorder.has(helper)) {
@@ -47,8 +54,9 @@ function compileHelpers() {
         var elements = this.element.querySelectorAll(ComponentHelper.selectors());
         if (elements.length) {
             Array.from(elements).forEach(elementHandler => {
-                 let componentHelper = new ComponentHelper();
-                 componentHelper.dom.call(null, this.context, elementHandler);
+                let componentHelper = new ComponentHelper();
+                componentHelper.model.call(this.context);
+                componentHelper.dom.call(null, this.context, elementHandler);
             });
         }
     });

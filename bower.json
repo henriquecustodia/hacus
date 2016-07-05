@@ -1,0 +1,27 @@
+{
+  "name": "hacus",
+  "description": "A javascript framework to create custom components easily",
+  "main": "dist/hacus.js",
+  "authors": [
+    {
+      "name": "Henrique Custódia",
+      "email": "martinshenrique8@gmail.com"
+    }
+  ],
+  "license": "ISC",
+  "keywords": [
+    "hacus",
+    "components",
+    "custom"
+  ],
+  "homepage": "https://github.com/henriquecustodia/hacus",
+  "ignore": [
+    ".babelrc",
+    ".gitignore",
+    "Gulpfile.js",
+    "src",
+    "example",
+    "node_modules",
+    "bower_components"
+  ]
+}

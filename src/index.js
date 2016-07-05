@@ -10,10 +10,10 @@ import './components/@output';
 import ComponentRecorder from './core/recorders/component-recorder';
 import Manager from './core/dom/manager';
 
-let Lonely = (name, configuration) => {
+let hacus = (name, configuration) => {
     new ComponentRecorder(name, configuration).register();
 };
 
-Lonely.lookAround = () => Manager.lookAround();
+hacus.lookAround = () => Manager.lookAround();
 
-window.Lonely = Lonely;
+window.hacus = hacus;
