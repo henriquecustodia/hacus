@@ -24,6 +24,9 @@ module.exports = class ComponentRecorder {
     }
 
     register() {
+        this.configuration.prototype.helpers = this.configuration.prototype.helpers || noop; 
+        this.configuration.prototype.dom = this.configuration.prototype.dom || noop; 
+        this.configuration.prototype.model = this.configuration.prototype.model || noop; 
         Storage.set(this.name, this.configuration);
     }
 

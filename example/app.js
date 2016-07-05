@@ -1,4 +1,4 @@
-Lonely('customElement', class {
+hacus('customElement', class {
     static selectors() {
         return 'custom';
     }
@@ -35,4 +35,4 @@ Lonely('customElement', class {
     }
 });
 
-Lonely.lookAround();
+hacus.lookAround();
