@@ -3,7 +3,7 @@
 class CustomError {
     constructor(message) {
         if (!message) {
-            this.notify(`A message is requires`);
+            this.notify(`A message is required`);
         }
 
         throw new Error(message);
