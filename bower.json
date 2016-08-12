@@ -2,6 +2,7 @@
   "name": "hacus",
   "description": "A javascript framework to create custom components easily",
   "main": "dist/hacus.js",
+  "version": "0.1.0-alpha",
   "authors": [
     {
       "name": "Henrique Custódia",
