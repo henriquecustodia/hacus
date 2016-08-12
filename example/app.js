@@ -1,12 +1,12 @@
 hacus('customElement', {
     selectors: 'custom',
 
-    helpers: ['@value', '@click', '@output', '@change'],
+    helpers: ['@value', '@click', '@output'],
 
     template() {
         return `
             <h1 @output="title"></h1>
-            <input @value="name" @change="onChange(name)">
+            <input @value="name">
             <button @click="say(name, ue)">click</button>
             <h2 @output="name"></h2>
         `;
