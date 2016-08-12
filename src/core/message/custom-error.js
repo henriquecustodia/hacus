@@ -1,16 +1,9 @@
 'use strict';
 
-class CustomError {
+class CustomError extends Error{
     constructor(message) {
-        if (!message) {
-            this.notify(`A message is required`);
-        }
-
-        throw new Error(message);
-    }
-
-    static notify(message) {
-        throw new Error(message);
+        super(message);
+        this.name = 'Hacus Error';
     }
 }
 

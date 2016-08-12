@@ -1,23 +1,28 @@
 'use strict';
 
 import Context from './../context/context';
-import ComponentRecorder from './../recorders/component-recorder';
-import {isFunction} from './../utils';
+import { Recorder } from './../recorders/component-recorder';
+import { isString } from './../utils';
 
 module.exports = class Engine {
-    constructor(element, Component) {
+    constructor(element, component) {
         this.context = new Context();
         this.element = element;
-        this.component = new Component();
+        this.component = component;
     }
 
     render() {
-        if (!isFunction(this.component.template)) {
+        if (!this.component.template) {
             return;
         }
 
         let div = document.createElement('div');
-        div.innerHTML = this.component.template();
+
+        if (isString(this.component.template)) {
+            div.innerHTML = this.component.template;
+        } else {
+            div.innerHTML = this.component.template(this.element);
+        }
 
         var arrNodes = Array.from(div.childNodes);
 
@@ -38,25 +43,24 @@ function compileComponent() {
 }
 
 function compileHelpers() {
-    let helpers = this.component.helpers();
+    let helpers = this.component.helpers;
 
     if (!helpers || !Array.isArray(helpers)) {
         return;
     }
 
     helpers.forEach(helper => {
-        if (!helper || !ComponentRecorder.has(helper)) {
+        if (!helper || !Recorder.has(helper)) {
             return;
         }
 
-        let ComponentHelper = ComponentRecorder.get(helper);
-
-        var elements = this.element.querySelectorAll(ComponentHelper.selectors());
+        let ComponentHelper = Recorder.get(helper);
+        
+        var elements = this.element.querySelectorAll(ComponentHelper.selectors);
         if (elements.length) {
-            Array.from(elements).forEach(elementHandler => {
-                let componentHelper = new ComponentHelper();
-                componentHelper.model.call(this.context);
-                componentHelper.dom.call(null, this.context, elementHandler);
+            Array.from(elements).forEach(element => {
+                ComponentHelper.model.call(this.context);
+                ComponentHelper.dom.call(null, this.context, element);
             });
         }
     });

@@ -3,15 +3,16 @@
 import 'core-js/es6/map';
 import 'core-js/es6/array';
 
-import './components/@input';
+import './components/@value';
 import './components/@click';
 import './components/@output';
+import './components/@change';
 
-import ComponentRecorder from './core/recorders/component-recorder';
+import { Recorder } from './core/recorders/component-recorder';
 import Manager from './core/dom/manager';
 
 let hacus = (name, configuration) => {
-    new ComponentRecorder(name, configuration).register();
+    Recorder.register(name, configuration);
 };
 
 hacus.lookAround = () => Manager.lookAround();

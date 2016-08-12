@@ -1,21 +1,22 @@
 'use strict';
 
-import ComponentRecorder from './../recorders/component-recorder';
+import { Recorder } from './../recorders/component-recorder';
 import Engine from './engine';
 import {isFunction} from './../utils';
 
 module.exports = class Manager {
     static lookAround() {
-        ComponentRecorder.each((Component, componentName) => {
-            if (!isFunction(Component.selectors)) {
+        Recorder.each((component, componentName) => {
+
+            if (!component.selectors) {
                 return;
             }
 
-            var elements = document.querySelectorAll(Component.selectors());
+            var elements = document.querySelectorAll(component.selectors);
 
             if (elements.length) {
                 Array.from(elements).forEach(element => {
-                    let engine = new Engine(element, Component);
+                    let engine = new Engine(element, component);
                     engine.render();
                     engine.compile();
                 });

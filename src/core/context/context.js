@@ -1,6 +1,6 @@
 'use strict';
 
-import {generateID} from './../utils';
+import {generateID, isInvalidToDOM} from './../utils';
 import defineWatcher from './watcher';
 
 class Context {
@@ -35,6 +35,14 @@ class Context {
     ['@unwatch'](prop, id) {
         this.unwatch('prop');
         this['@watchers'].get(prop).delete(id);
+    }
+
+    ['@@safeGet'](prop, fn = () => { }) {
+        let value = this[prop];
+
+        if (!isInvalidToDOM(value)) {
+            fn(value);
+        }
     }
 }
 

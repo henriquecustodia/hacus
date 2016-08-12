@@ -1,36 +1,36 @@
-hacus('customElement', class {
-    static selectors() {
-        return 'custom';
-    }
+hacus('customElement', {
+    selectors: 'custom',
 
-    helpers(){
-        return ['@input', '@click', '@output'];
-    }
+    helpers: ['@value', '@click', '@output', '@change'],
 
     template() {
         return `
             <h1 @output="title"></h1>
-            <input @input="name">
-            <button @click="say()">click</button>
+            <input @value="name" @change="onChange(name)">
+            <button @click="say(name, ue)">click</button>
             <h2 @output="name"></h2>
         `;
-    }
+    },
     
     dom(model, element) {
         var title = element.getAttribute('title');
 
         model.title = title;
-    }
+    },
 
     model() {
         this['@watch']('name', function (old, newName) {
             console.log('controller', newName);
         });
 
-        this.name = 'henrique';
+        this.ue = { a: 'aa' };
 
-        this.say = function () {
+        this.say = function (name, ue) {
             alert('Hello, ' + this.name);
+        };
+
+        this.onChange = function (name) {
+          debugger  
         };
     }
 });

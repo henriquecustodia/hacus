@@ -1,23 +1,17 @@
 'use strict';
 
-import ComponentRecorder from './../core/recorders/component-recorder';
+import { Recorder } from './../core/recorders/component-recorder';
 
-const name = '@output';
-
-class Configuration {
-    static selectors() {
-        return '[\\@output]';
-    }
+Recorder.register('@output', {
+    selectors: '[\\@output]',
 
     dom(model, element) {
-        let output = element.getAttribute('@output');
+        let propModel = element.getAttribute('@output');
 
-        element.innerHTML = model[output];
+        model['@@safeGet'](propModel, value => element.innerHTML = value);
 
-        model['@watch'](output, (old, current) => {
-            element.innerHTML = current;
+        model['@watch'](propModel, (old, current) => {
+            model['@@safeGet'](propModel, value => element.innerHTML = value);
         });
     }
-}
-
-new ComponentRecorder(name, Configuration).register();
+});

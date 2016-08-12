@@ -3,12 +3,12 @@
 import { Recorder } from './../core/recorders/component-recorder';
 import { isFunction } from './../core/utils';
 
-Recorder.register('@click', {
+Recorder.register('@change', {
     
-    selectors: '[\\@click]',
+    selectors: '[\\@change]',
 
     dom(model, element) {
-        let fn = element.getAttribute('@click');
+        let fn = element.getAttribute('@change');
 
         if (!fn || !/[\(](.*)[\)]/g.test(fn)) return;
 
@@ -17,8 +17,8 @@ Recorder.register('@click', {
         if (!fnName || !fnParams) return;
 
         let params = (fnParams = fnParams.replace(' ', '')).substr(0, fnParams.length - 1).split(',');
-        
-        element.onclick = () => {
+
+        element.onkeyup = () => {
             let references = [];
 
             params.forEach(function (param) {
