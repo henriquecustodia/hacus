@@ -1,5 +1,5 @@
 <div align="center">
-   <img src="https://github.com/henriquecustodia/hacus/blob/master/hacus.gif" width="300px" height="300px">
+   <img src="https://github.com/henriquecustodia/hacus/blob/master/hacus.gif" width="600px" height="600px">
 </div>
 
 
