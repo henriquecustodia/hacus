@@ -4,5 +4,5 @@
 
 
 # Hacus
-A javascript framework to create custom components easily
+A javascript library to create custom components easily
 
